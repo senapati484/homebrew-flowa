@@ -2,7 +2,7 @@ class Flowa < Formula
   desc "Your fast, Python + Go inspired language"
   homepage "https://github.com/senapati484/flowa"
   url "https://github.com/senapati484/flowa/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "PUT_REAL_SHA256_HERE"
+  sha256 "118e3ddf4bd18fc58cf76976bc5075013705b6a7bbc13a6c44f2e1c45b8c8cb5"
   license "MIT"
 
   depends_on "go" => :build
