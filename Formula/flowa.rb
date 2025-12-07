@@ -1,18 +1,22 @@
 class Flowa < Formula
-  desc "Pipeline-first language for modern flows"
+  desc "Flowa JIT Compiler - A V8-style JIT for backend systems"
   homepage "https://github.com/senapati484/flowa"
-  url "https://github.com/senapati484/flowa/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "1d3a6c73fb6bc6147427b8e00e73300b340cf49dcb0c86b12cdebfd9128af421"
-  version "0.1.1"
+  url "https://github.com/senapati484/flowa/archive/refs/tags/v0.1.3.tar.gz"
+  sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
   license "MIT"
 
-  depends_on "go" => :build
+  depends_on "cmake" => :build
+  depends_on "llvm" => :build
 
   def install
-    system "go", "build", *std_go_args(output: bin/"flowa"), "./cmd/flowa"
+    mkdir "build" do
+      system "cmake", "..", *std_cmake_args
+      system "make", "install"
+    end
   end
 
   test do
-    system "#{bin}/flowa", "--version"
+    (testpath/"test.flowa").write 'print("Hello Homebrew")'
+    assert_match "Hello Homebrew", shell_output("#{bin}/flowa test.flowa")
   end
 end
