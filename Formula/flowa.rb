@@ -2,7 +2,7 @@ class Flowa < Formula
   desc "Flowa JIT Compiler - A V8-style JIT for backend systems"
   homepage "https://github.com/senapati484/flowa"
   url "https://github.com/senapati484/flowa/archive/refs/tags/v0.1.3.tar.gz"
-  sha256 "fb014444a89dd4c6bc05b25e5c6e34e222bd43972ae960f4ac9e4aa92323d71c"
+  sha256 "ced9ffe5b674d55d15fd7c13d9d02064ef1ffb967da74426e2041ca516a4ad74"
   license "MIT"
   version "0.1.3"
 
