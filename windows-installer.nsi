@@ -7,7 +7,7 @@
 !define PRODUCT_NAME "Flowa"
 !define PRODUCT_VERSION "1.0.0"
 !define PRODUCT_PUBLISHER "Flowa Language Team"
-!define PRODUCT_WEB_SITE "https://github.com/senapati484/flowa"
+!define PRODUCT_WEB_SITE "https://github.com/yourusername/flowa"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 

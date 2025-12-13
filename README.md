@@ -3,39 +3,67 @@
 ## Quick Install (macOS)
 
 ```bash
-brew install senapati484/flowa
+# First time
+brew tap senapati484/flowa
+brew install flowa
+
+# Or in one command
+brew install senapati484/flowa/flowa
 ```
 
 ---
 
 ## Publishing to Homebrew
 
-### 1. Create GitHub Release
+The formula installs a **pre-built binary** from the tarball hosted in the `homebrew-flowa` repository.
 
-1. Tag and push:
-   ```bash
-   git tag v0.1.4
-   git push origin v0.1.4
-   ```
+### Update Homebrew Tap
 
-2. Go to https://github.com/senapati484/flowa-v8/releases
-3. Create new release with tag `v0.1.4`
-4. Upload `packaging/flowa.tar.gz`
-5. Publish (can be public even if repo is private)
-
-### 2. Update Homebrew Tap
-
-Copy `Formula/flowa.rb` to your `homebrew-flowa` repo:
+Whenever you update Flowa:
 
 ```bash
-cp Formula/flowa.rb /path/to/homebrew-flowa/Formula/
+# 1. Copy the updated files to homebrew-flowa repo
+cp packaging/Formula/flowa.rb /path/to/homebrew-flowa/Formula/
+cp packaging/flowa.tar.gz /path/to/homebrew-flowa/
+
+# 2. Commit and push
 cd /path/to/homebrew-flowa
-git add Formula/flowa.rb
-git commit -m "Release v0.1.4"
-git push
+git add Formula/flowa.rb flowa.tar.gz
+git commit -m "Update Flowa to v0.1.4"
+git push origin main
 ```
 
-Done!
+Users can then update with:
+```bash
+brew update
+brew upgrade flowa
+```
+
+---
+
+## How It Works
+
+- **Binary distribution**: The tarball contains a pre-compiled `flowa` binary
+- **Hosted in homebrew-flowa**: The tarball is stored in your public tap repository
+- **No compilation needed**: Users get instant installation without building from source
+- **Works with private repos**: The main flowa-v8 repo can remain private
+
+---
+
+## Building the Tarball
+
+To create a new `flowa.tar.gz`:
+
+```bash
+# Build the project
+./build.sh
+
+# Create the tarball
+cd packaging
+tar -czf flowa.tar.gz -C ../build flowa ../LICENSE ../README.md
+```
+
+Or use the existing `flowa.tar.gz` in the packaging directory.
 
 ---
 
@@ -54,32 +82,26 @@ Output: `flowa-installer-windows.exe`
 
 ## Files
 
-- `Formula/flowa.rb` - Homebrew formula (copy to homebrew-flowa repo)
-- `flowa.tar.gz` - Pre-built binary (upload to GitHub Releases)
+- `Formula/flowa.rb` - Homebrew formula (copy to homebrew-flowa/Formula/)
+- `flowa.tar.gz` - Pre-built binary archive (copy to homebrew-flowa root)
 - `windows-installer.nsi` - Windows installer script
 
 ---
 
-## Updating Version
+## Testing Locally
 
-1. **Build**:
-   ```bash
-   ./build.sh
-   cd packaging
-   shasum -a 256 flowa.tar.gz  # Get new hash
-   ```
+Before pushing to homebrew-flowa, test the formula:
 
-2. **Update Formula**:
-   - Change version number
-   - Update SHA256 hash
-   - Update URL with new version tag
-
-3. **Release**:
-   - Create GitHub release
-   - Upload tarball
-   - Push updated formula to homebrew-flowa
-
-Users auto-update with:
 ```bash
-brew update && brew upgrade flowa
+# Test installation from local formula
+brew install --build-from-source packaging/Formula/flowa.rb
+
+# Verify it works  
+flowa --version
+flowa tests/test_empty.flowa
+
+# Clean up
+brew uninstall flowa
 ```
+
+
