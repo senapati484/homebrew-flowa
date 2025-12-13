@@ -2,7 +2,7 @@ class Flowa < Formula
   desc "Flowa: A high-performance scripting language"
   homepage "https://flowa-docs.vercel.app"
   url "https://raw.githubusercontent.com/senapati484/homebrew-flowa/main/flowa.tar.gz"
-  version "0.1.4"
+  version "0.1.5"
   license "MIT"
 
   # Runtime dependencies
