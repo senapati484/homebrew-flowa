@@ -1,9 +1,9 @@
 {
   "name": "flowa",
-  "displayName": "Flowa Language Support",
+  "displayName": "Flowa",
   "description": "Syntax highlighting and file icons for Flowa programming language",
   "version": "0.1.0",
-  "publisher": "flowa",
+  "publisher": "senapati484",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/senapati484/flowa"
+    "url": "https://github.com/senapati484/homebrew-flowa"
   },
   "contributes": {
     "languages": [{

@@ -17,6 +17,11 @@ brew tap senapati484/flowa
 brew install flowa
 ```
 
+### Option 3: Manual VS Code Extension
+If you prefer, you can install the extension separately:
+1. Download `flowa-0.1.0.vsix` from releases (or build it from `editor-support/vscode`).
+2. Run `code --install-extension flowa-0.1.0.vsix`.
+
 *Note: If you use Option 2, run the commands shown in the output to enable syntax highlighting.*
 
 ---
