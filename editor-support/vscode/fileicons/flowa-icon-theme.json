@@ -1,0 +1,12 @@
+{
+    "hidesExplorerArrows": false,
+    "iconDefinitions": {
+        "flowa-icon": {
+            "iconPath": "../icons/flowa-icon.png"
+        }
+    },
+    "fileExtensions": {
+        "flowa": "flowa-icon"
+    },
+    "fileNames": {}
+}

@@ -1,0 +1,36 @@
+{
+  "name": "flowa",
+  "displayName": "Flowa Language Support",
+  "description": "Syntax highlighting and file icons for Flowa programming language",
+  "version": "0.1.0",
+  "publisher": "flowa",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "flowa",
+      "aliases": ["Flowa", "flowa"],
+      "extensions": [".flowa"],
+      "configuration": "./language-configuration.json",
+      "icon": {
+        "light": "./icons/flowa-icon.png",
+        "dark": "./icons/flowa-icon.png"
+      }
+    }],
+    "grammars": [{
+      "language": "flowa",
+      "scopeName": "source.flowa",
+      "path": "./syntaxes/flowa.tmLanguage.json"
+    }],
+    "iconThemes": [{
+      "id": "flowa-icons",
+      "label": "Flowa File Icons",
+      "path": "./fileicons/flowa-icon-theme.json"
+    }]
+  },
+  "icon": "icons/flowa-icon.png"
+}
