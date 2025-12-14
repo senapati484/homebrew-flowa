@@ -14,7 +14,11 @@ class Flowa < Formula
     bin.install "flowa"
     
     # Install editor support files to a shared location
-    (share/"flowa/editor-support").install Dir["editor-support/*"] if Dir.exist?("editor-support")
+    if Dir.exist?("editor-support")
+      (share/"flowa").install "editor-support"
+    else
+      print "Warning: editor-support directory not found in source"
+    end
   end
 
   def post_install
