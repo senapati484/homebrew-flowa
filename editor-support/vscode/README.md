@@ -38,7 +38,7 @@ func calculate(x, y) {
 
 ## Release Notes
 
-### 0.1.0
+### 0.1.2
 
 - Initial release with basic syntax highlighting and icon theme.
 

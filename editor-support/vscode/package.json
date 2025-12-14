@@ -2,7 +2,7 @@
   "name": "flowa",
   "displayName": "Flowa",
   "description": "Syntax highlighting and file icons for Flowa programming language",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "senapati484",
   "homepage": "https://flowa-docs.vercel.app",
   "bugs": {
@@ -13,7 +13,6 @@
   },
   "categories": [
     "Programming Languages",
-    "Themes",
     "Other"
   ],
   "keywords": [
@@ -41,11 +40,6 @@
       "language": "flowa",
       "scopeName": "source.flowa",
       "path": "./syntaxes/flowa.tmLanguage.json"
-    }],
-    "iconThemes": [{
-      "id": "flowa-icons",
-      "label": "Flowa File Icons",
-      "path": "./fileicons/flowa-icon-theme.json"
     }]
   },
   "icon": "icons/flowa-icon.png"
