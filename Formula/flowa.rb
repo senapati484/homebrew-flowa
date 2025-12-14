@@ -24,15 +24,37 @@ class Flowa < Formula
   def post_install
     ohai "🚀 Setting up Flowa editor integration..."
 
+    # Create the editor support path
     editor_support = share/"flowa/editor-support"
-    return unless editor_support.exist?
+    
+    # Debugging: Print paths
+    puts "  Debug: Editor support path: #{editor_support}"
+    puts "  Debug: User home: #{Dir.home}"
+
+    unless editor_support.exist?
+      ohai "⚠️  Warning: Could not find editor support files at #{editor_support}"
+      ohai "    Please check if 'brew install' copied them correctly."
+      return
+    end
 
     # 1. VS Code Support
-    vscode_ext_dir = Dir.home + "/.vscode/extensions/flowa-language-support"
-    if Dir.exist?(Dir.home + "/.vscode/extensions") || Dir.exist?(Dir.home + "/Applications/Visual Studio Code.app")
+    # Detect VS Code
+    vscode_installed = File.exist?("#{Dir.home}/Applications/Visual Studio Code.app") ||
+                       File.exist?("/Applications/Visual Studio Code.app") ||
+                       Dir.exist?("#{Dir.home}/.vscode")
+    
+    if vscode_installed
+      vscode_ext_dir = "#{Dir.home}/.vscode/extensions/flowa-language-support"
       mkdir_p vscode_ext_dir
-      cp_r Dir[editor_support/"vscode/*"], vscode_ext_dir
-      ohai "  ✅ VS Code extension installed"
+      
+      # Use string interpolation for glob to ensure it's a string
+      files = Dir["#{editor_support}/vscode/*"]
+      if files.empty?
+        puts "  Warning: No VS Code files found in #{editor_support}/vscode/"
+      else
+        cp_r files, vscode_ext_dir
+        ohai "  ✅ VS Code extension installed"
+      end
     end
 
     # 2. Sublime Text Support
@@ -56,12 +78,47 @@ class Flowa < Formula
       mkdir_p "#{base_dir}/syntax"
       mkdir_p "#{base_dir}/ftdetect"
       
-      cp editor_support/"vim/flowa.vim", "#{base_dir}/syntax/"
-      cp editor_support/"vim/ftdetect/flowa.vim", "#{base_dir}/ftdetect/"
-      ohai "  ✅ Vim/Neovim syntax installed in #{base_dir}"
+    # 2. Sublime Text Support
+    sublime_dir = ""
+    if OS.mac?
+      sublime_dir = "#{Dir.home}/Library/Application Support/Sublime Text/Packages/User"
+    elsif OS.linux?
+      sublime_dir = "#{Dir.home}/.config/sublime-text/Packages/User"
     end
     
-    ohai "🎉 Flowa editor support installed!"
+    if !sublime_dir.empty? && Dir.exist?(sublime_dir)
+      target_file = "#{sublime_dir}/Flowa.sublime-syntax"
+      src_file = "#{editor_support}/sublime/Flowa.sublime-syntax"
+      
+      if File.exist?(src_file)
+        cp src_file, target_file
+        ohai "  ✅ Sublime Text syntax installed"
+      else
+        puts "  Warning: Sublime syntax file not found at #{src_file}"
+      end
+    end
+
+    # 3. Vim/Neovim Support
+    vim_dirs = ["#{Dir.home}/.vim", "#{Dir.home}/.config/nvim"]
+    vim_dirs.each do |base_dir|
+      next unless Dir.exist?(base_dir)
+      
+      mkdir_p "#{base_dir}/syntax"
+      mkdir_p "#{base_dir}/ftdetect"
+      
+      vim_file = "#{editor_support}/vim/flowa.vim"
+      ftdetect_file = "#{editor_support}/vim/ftdetect/flowa.vim"
+      
+      if File.exist?(vim_file)
+        cp vim_file, "#{base_dir}/syntax/"
+        cp ftdetect_file, "#{base_dir}/ftdetect/"
+        ohai "  ✅ Vim/Neovim syntax installed in #{base_dir}"
+      else
+         puts "  Warning: Vim files not found at #{vim_file}"
+      end
+    end
+    
+    ohai "🎉 Flowa editor support installation complete!"
   end
 
   def caveats
