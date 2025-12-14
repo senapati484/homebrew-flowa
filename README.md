@@ -2,14 +2,22 @@
 
 ## Quick Install (macOS)
 
+### Option 1: Automatic Install (Recommended)
+Installs Flowa and automatically sets up VS Code/Vim extensions.
+
 ```bash
-# First time
+curl -fsSL https://raw.githubusercontent.com/senapati484/homebrew-flowa/main/install_with_editor_support.sh | bash
+```
+
+### Option 2: Standard Homebrew Install
+Installs Flowa only (manual editor setup required).
+
+```bash
 brew tap senapati484/flowa
 brew install flowa
-
-# Or in one command
-brew install senapati484/flowa/flowa
 ```
+
+*Note: If you use Option 2, run the commands shown in the output to enable syntax highlighting.*
 
 ---
 
