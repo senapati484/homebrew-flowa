@@ -26,6 +26,10 @@ If you prefer, you can install the extension separately:
 
 ---
 
+### VS-Code Extension
+
+The VS Code extension is available at [senapati484.flowa](https://marketplace.visualstudio.com/items?itemName=senapati484.flowa).
+
 ## Publishing to Homebrew
 
 The formula installs a **pre-built binary** from the tarball hosted in the `homebrew-flowa` repository.
