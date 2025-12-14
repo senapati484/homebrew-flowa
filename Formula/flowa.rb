@@ -71,34 +71,6 @@ class Flowa < Formula
     end
 
     # 3. Vim/Neovim Support
-    vim_dirs = [Dir.home + "/.vim", Dir.home + "/.config/nvim"]
-    vim_dirs.each do |base_dir|
-      next unless Dir.exist?(base_dir)
-      
-      mkdir_p "#{base_dir}/syntax"
-      mkdir_p "#{base_dir}/ftdetect"
-      
-    # 2. Sublime Text Support
-    sublime_dir = ""
-    if OS.mac?
-      sublime_dir = "#{Dir.home}/Library/Application Support/Sublime Text/Packages/User"
-    elsif OS.linux?
-      sublime_dir = "#{Dir.home}/.config/sublime-text/Packages/User"
-    end
-    
-    if !sublime_dir.empty? && Dir.exist?(sublime_dir)
-      target_file = "#{sublime_dir}/Flowa.sublime-syntax"
-      src_file = "#{editor_support}/sublime/Flowa.sublime-syntax"
-      
-      if File.exist?(src_file)
-        cp src_file, target_file
-        ohai "  ✅ Sublime Text syntax installed"
-      else
-        puts "  Warning: Sublime syntax file not found at #{src_file}"
-      end
-    end
-
-    # 3. Vim/Neovim Support
     vim_dirs = ["#{Dir.home}/.vim", "#{Dir.home}/.config/nvim"]
     vim_dirs.each do |base_dir|
       next unless Dir.exist?(base_dir)
@@ -117,6 +89,8 @@ class Flowa < Formula
          puts "  Warning: Vim files not found at #{vim_file}"
       end
     end
+      
+
     
     ohai "🎉 Flowa editor support installation complete!"
   end
