@@ -22,7 +22,7 @@
 
 Flowa is a modern, dynamically-typed programming language designed for rapid development with built-in support for asynchronous programming, file I/O, authentication, email, databases, HTTP servers, and job scheduling. It compiles to bytecode and executes on a custom runtime with JIT compilation support.
 
-## Version 0.1.5 (December 2025)
+## Version 0.1.6 (December 2025)
 
 ### Key Features
 
