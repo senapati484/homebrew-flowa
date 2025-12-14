@@ -27,7 +27,7 @@ class Flowa < Formula
     # Create the editor support path
     editor_support = share/"flowa/editor-support"
     
-    # Debugging: Print paths
+    # Debug information
     puts "  Debug: Editor support path: #{editor_support}"
     puts "  Debug: User home: #{Dir.home}"
 
@@ -37,8 +37,8 @@ class Flowa < Formula
       return
     end
 
-    # 1. VS Code Support
-    # Detect VS Code
+    # 1. VS Code Support (includes Logo)
+    # Detect VS Code installation
     vscode_installed = File.exist?("#{Dir.home}/Applications/Visual Studio Code.app") ||
                        File.exist?("/Applications/Visual Studio Code.app") ||
                        Dir.exist?("#{Dir.home}/.vscode")
@@ -47,27 +47,36 @@ class Flowa < Formula
       vscode_ext_dir = "#{Dir.home}/.vscode/extensions/flowa-language-support"
       mkdir_p vscode_ext_dir
       
-      # Use string interpolation for glob to ensure it's a string
+      # Copy all VS Code extension files (including icon)
+      # Use glob to find files inside the vscode directory
       files = Dir["#{editor_support}/vscode/*"]
+      
       if files.empty?
         puts "  Warning: No VS Code files found in #{editor_support}/vscode/"
       else
         cp_r files, vscode_ext_dir
-        ohai "  ✅ VS Code extension installed"
+        ohai "  ✅ VS Code extension installed (with Logo)"
       end
     end
 
     # 2. Sublime Text Support
     sublime_dir = ""
     if OS.mac?
-      sublime_dir = Dir.home + "/Library/Application Support/Sublime Text/Packages/User"
+      sublime_dir = "#{Dir.home}/Library/Application Support/Sublime Text/Packages/User"
     elsif OS.linux?
-      sublime_dir = Dir.home + "/.config/sublime-text/Packages/User"
+      sublime_dir = "#{Dir.home}/.config/sublime-text/Packages/User"
     end
     
     if !sublime_dir.empty? && Dir.exist?(sublime_dir)
-      cp editor_support/"sublime/Flowa.sublime-syntax", sublime_dir
-      ohai "  ✅ Sublime Text syntax installed"
+      target_file = "#{sublime_dir}/Flowa.sublime-syntax"
+      src_file = "#{editor_support}/sublime/Flowa.sublime-syntax"
+      
+      if File.exist?(src_file)
+        cp src_file, target_file
+        ohai "  ✅ Sublime Text syntax installed"
+      else
+        puts "  Warning: Sublime syntax file not found at #{src_file}"
+      end
     end
 
     # 3. Vim/Neovim Support
@@ -89,8 +98,6 @@ class Flowa < Formula
          puts "  Warning: Vim files not found at #{vim_file}"
       end
     end
-      
-
     
     ohai "🎉 Flowa editor support installation complete!"
   end
