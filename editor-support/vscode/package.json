@@ -2,13 +2,25 @@
   "name": "flowa",
   "displayName": "Flowa",
   "description": "Syntax highlighting and file icons for Flowa programming language",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "senapati484",
+  "homepage": "https://flowa-docs.vercel.app",
+  "bugs": {
+    "url": "https://github.com/senapati484/homebrew-flowa/issues"
+  },
   "engines": {
     "vscode": "^1.70.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "flowa",
+    "scripting",
+    "language",
+    "jit"
   ],
   "repository": {
     "type": "git",
