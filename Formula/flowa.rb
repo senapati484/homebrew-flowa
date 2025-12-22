@@ -3,7 +3,7 @@ class Flowa < Formula
   homepage "https://flowa-docs.vercel.app"
   url "https://raw.githubusercontent.com/senapati484/homebrew-flowa/main/flowa.tar.gz"
   version "0.1.7"
-  sha256 "62a642660ec1c77736671533e967cce98d3b2945e5611b5f55f63274a1448414"
+  sha256 "ce3531e385953148fc0e004f0c78d42ff3ebc8897f2e6dee387481aa0a03685a"
   license "MIT"
 
   depends_on "llvm"
