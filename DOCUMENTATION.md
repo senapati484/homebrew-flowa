@@ -270,6 +270,25 @@ while (i < 5) {
 }
 ```
 
+### For Loops
+
+Standard C-style loop:
+
+```flowa
+for (let i = 0; i < 5; i = i + 1) {
+    print(i);
+}
+```
+
+For-In loop (iterating arrays):
+
+```flowa
+let fruits = ["apple", "banana", "cherry"];
+for item in fruits {
+    print(item);
+}
+```
+
 ### Break and Continue
 
 ```flowa
@@ -576,6 +595,48 @@ let response = http.get("https://api.example.com/data");
 let api_data = json.parse(response);
 ```
 
+**Security Features:**
+
+The HTTP server includes built-in security hardening:
+
+```flowa
+let server = http.createServer();
+
+// 1. Origin/Domain Filtering
+server.setDevMode(true);              // Auto-allow localhost (dev)
+server.setAllowedOrigins(["example.com", "*.myapp.com"]);
+server.addAllowedOrigin("api.trusted.io");
+
+// 2. Rate Limiting (per IP)
+server.setRateLimit(60);              // 60 requests/minute per IP
+
+// 3. Request Body Size Limit
+server.setMaxBodySize(1048576);       // 1MB max body size
+
+// 4. CORS (Cross-Origin Resource Sharing)
+server.enableCORS(true);
+server.setCORSOrigins(["frontend.example.com", "*"]);
+
+server.listen(3000);
+```
+
+**Security Method Reference:**
+
+| Method | Description |
+|--------|-------------|
+| `setDevMode(bool)` | Allow localhost in development |
+| `setAllowedOrigins(array)` | Whitelist allowed origins |
+| `addAllowedOrigin(string)` | Add single origin to whitelist |
+| `setRateLimit(int)` | Requests per minute per IP |
+| `setMaxBodySize(bytes)` | Max request body size |
+| `enableCORS(bool)` | Enable CORS headers |
+| `setCORSOrigins(array)` | Allowed CORS origins |
+
+**HTTP Response Codes:**
+- `403 Forbidden` - Origin not allowed
+- `429 Too Many Requests` - Rate limit exceeded
+- `413 Payload Too Large` - Body size limit exceeded
+
 ### os (Operating System)
 
 **Module Implementation**: Provides OS-level operations including environment variables, command execution, and path utilities.
@@ -767,22 +828,55 @@ async func fetch_data(url) {
 let promise = fetch_data("https://api.example.com");
 ```
 
-### Error Handling
+### Error Handling (Try-Catch-Finally)
+
+Flowa supports structured exception handling with `try`, `catch`, and `finally` blocks:
 
 ```flowa
-// Defensive programming approach
-func safe_divide(a, b) {
-    if (b == 0) {
-        return null;
-    }
-    return a / b;
+// Basic try-catch
+try {
+    let result = riskyOperation();
+} catch (e) {
+    print("Error: " + e);
 }
 
-let result = safe_divide(10, 0);
-if (result == null) {
-    print("Division by zero");
+// Try-catch-finally
+try {
+    let file = openFile("data.txt");
+    processFile(file);
+} catch (e) {
+    print("Error: " + e["message"]);
+} finally {
+    print("Cleanup executed");
+}
+
+// Throw custom errors
+func validateAge(age) {
+    if (age < 0) {
+        throw "Age cannot be negative";
+    }
+    if (age > 150) {
+        throw { "code": 400, "message": "Invalid age" };
+    }
+    return true;
+}
+
+// Catching structured errors
+try {
+    validateAge(-5);
+} catch (e) {
+    // For runtime errors, e contains:
+    // - e["message"] - error description
+    // - e["type"] - error type (e.g., "RuntimeError")
+    // - e["line"] - line number where error occurred
+    print("Error at line " + e["line"] + ": " + e["message"]);
 }
 ```
+
+**Error Object Properties:**
+- `message` - The error message/description
+- `type` - The type of error (e.g., "RuntimeError")
+- `line` - Line number where the error occurred (when available)
 
 ### Higher-Order Functions
 
@@ -1051,6 +1145,7 @@ See `LICENSE` file in repository root.
 
 Last Updated: December 2024
 
+if (true){
     print("Release Candidate")
 } else {
     print("Beta")
@@ -1087,19 +1182,21 @@ Classes support methods and fields.
 ```flowa
 class User {
     func init(name) {
-        this.name = name
+        this.name = name;
     }
 
     func greet() {
-        print("Hello, " + this.name)
+        print("Hello, " + this.name);
     }
 }
 
-let user = new User("Alice")
-user.greet()
+let user = new User("Alice");
+user.greet();         // Hello, Alice
+print(user.name);     // Alice
 ```
 
 ---
+
 
 ## Concurrency (Actor Model)
 
@@ -1107,7 +1204,7 @@ Flowa uses the Actor Model for concurrency. Actors share no memory and communica
 
 ### Actors
 
-Defined like classes but with the `actor` keyword.
+Defined using the `actor` keyword.
 
 ```flowa
 actor Worker {
