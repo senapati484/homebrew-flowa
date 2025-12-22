@@ -31,8 +31,8 @@ Flowa is a modern, dynamically-typed programming language designed for rapid dev
 - **Async/Await**: Built-in asynchronous programming
 - **Actor Model**: Message-passing concurrency without locks
 - **Comprehensive Modules**: 12+ standard library modules for common tasks
-- **Automatic Memory Management**: Garbage collection with reference tracking
-- **JIT Compilation**: Performance optimization through just-in-time compilation
+- **Advanced JIT**: LLVM-powered Just-In-Time compilation with `TaggedValue` performance primitive
+- **Automatic Memory Management**: Managed heap with object pooling and cleanup
 
 ---
 
@@ -1195,155 +1195,52 @@ user.greet();         // Hello, Alice
 print(user.name);     // Alice
 ```
 
----
+#### Constructors (init)
 
+The `init` method is automatically called when a new instance is created with the `new` keyword. All arguments passed to `new ClassName(...)` are forwarded to the `init` method.
 
-## Concurrency (Actor Model)
+#### Inheritance
 
-Flowa uses the Actor Model for concurrency. Actors share no memory and communicate via messages.
-
-### Actors
-
-Defined using the `actor` keyword.
+Flowa supports single inheritance using the `class Child < Parent` syntax.
 
 ```flowa
-actor Worker {
-    func process(data) {
-        print("Processing:", data)
+class Admin < User {
+    func init(name, role) {
+        super.init(name);
+        this.role = role;
+    }
+
+    func info() {
+        print(this.name + " is an " + this.role);
     }
 }
 ```
 
-### Message Passing
-
-Use `spawn` to create an actor instance and `send` (or `->`) to send messages.
-
-```flowa
-let w = spawn Worker()
-w.process("Task 1") // Asynchronous call
-```
-
 ---
 
-## Standard Library
 
-### File System (fs)
 
-Synchronous file I/O operations.
+### Concurrency (Actor Model)
+
+Flowa uses the Actor Model for concurrency. Actors share no memory and communicate via messages.
+
+#### Defining Actors
+
+Defined using the `actor` keyword. Actors are like classes but their methods are executed asynchronously in their own task context.
 
 ```flowa
-if (fs.exists("file.txt")) {
-    let content = unwrap(fs.readFile("file.txt"))
-    print(content)
+actor Worker {
+    func process(data) {
+        print("Processing:", data);
+    }
 }
-
-fs.writeFile("out.txt", "Hello World")
-fs.appendFile("out.txt", "!!!")
-fs.unlink("out.txt") // Delete
 ```
 
-### HTTP & Networking (http)
+#### Message Passing
 
-Native HTTP server and client.
-
-#### Server
+Use `spawn` to create an actor instance. Method calls on an actor instance are non-blocking and return immediately.
 
 ```flowa
-http.listen(8080, func(req, res) {
-    print(req["method"] + " " + req["path"])
-    res.send("Hello from Flowa Server")
-})
+let w = spawn Worker();
+w.process("Task 1"); // Asynchronous call
 ```
-
-#### Client
-
-```flowa
-let res = http.fetch("http://example.com")
-print(res["status"], res["body"])
-```
-
-### JSON (json)
-
-Parse and stringify JSON.
-
-```flowa
-let data = {"key": "value"}
-let str = json.stringify(data)
-let obj = json.parse(str)
-```
-
-### Database (sqlite)
-
-Built-in SQLite support.
-
-```flowa
-let db = sqlite.connect("test.db")
-sqlite.exec(db, "CREATE TABLE IF NOT EXISTS users (id INT, name TEXT)")
-sqlite.exec(db, "INSERT INTO users VALUES (1, 'Alice')")
-
-let rows = sqlite.query(db, "SELECT * FROM users")
-print(rows)
-
-sqlite.close(db)
-```
-
-### Operating System (os)
-
-System interaction.
-
-```flowa
-print(os.platform()) // "darwin" or "linux"
-print(os.arch())     // "arm64" "x64"
-print(os.cwd())      // Current working directory
-
-os.setenv("MY_VAR", "123")
-print(env.MY_VAR)
-// or
-print(env["MY_VAR"])
-```
-
-### Scheduling (cron)
-
-Run tasks periodically using the event loop.
-
-```flowa
-cron.every("5s", func() {
-    print("Heartbeat...")
-})
-```
-
-### Logging (log)
-
-Structured logging with JSON output.
-
-```flowa
-log.info("Server started", {"port": 8080})
-log.error("DB Connection failed", {"retries": 3})
-```
-
-### Email (mail)
-
-Send emails via SMTP.
-
-```flowa
-let config = {
-    "host": "smtp.example.com",
-    "port": 587,
-    "user": "me@example.com",
-    "pass": "secret"
-}
-mail.send(config, "to@example.com", "Subject", "Body")
-```
-
-### Testing (test)
-
-Flowa includes a built-in testing framework.
-
-```flowa
-test("Addition", func() {
-    let sum = 2 + 2
-    assert(sum == 4, "Math is broken")
-})
-```
-
-Run tests with `flowa test <dir>` or `flowa <file.flowa>`.

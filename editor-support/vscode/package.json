@@ -2,7 +2,7 @@
   "name": "flowa",
   "displayName": "Flowa",
   "description": "Syntax highlighting and file icons for Flowa programming language",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "senapati484",
   "homepage": "https://flowa-docs.vercel.app",
   "bugs": {
@@ -17,6 +17,7 @@
   ],
   "keywords": [
     "flowa",
+    "fl",
     "scripting",
     "language",
     "jit"
@@ -29,7 +30,7 @@
     "languages": [{
       "id": "flowa",
       "aliases": ["Flowa", "flowa"],
-      "extensions": [".flowa"],
+      "extensions": [".flowa", ".fl"],
       "configuration": "./language-configuration.json",
       "icon": {
         "light": "./icons/flowa-icon.png",

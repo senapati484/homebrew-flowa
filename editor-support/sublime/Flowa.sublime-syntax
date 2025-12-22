@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Flowa
-file_extensions: [flowa]
+file_extensions: [flowa, fl]
 scope: source.flowa
 
 contexts:
@@ -11,6 +11,7 @@ contexts:
     - include: strings
     - include: numbers
     - include: functions
+    - include: modules
     - include: operators
 
   comments:
@@ -29,9 +30,11 @@ contexts:
           pop: true
 
   keywords:
-    - match: '\b(if|else|while|for|return|break|continue|try|catch|throw|switch|case|default)\b'
+    - match: '\b(if|else|while|for|return|break|continue|try|catch|finally|throw|switch|case|default)\b'
       scope: keyword.control.flowa
-    - match: '\b(let|const|var|function|func|class|new|this|super|extends|static|async|await|import|export|from|as)\b'
+    - match: '\b(let|const|var|function|func|class|actor)\b'
+      scope: keyword.declaration.flowa
+    - match: '\b(new|this|super|extends|static|async|await|spawn|import|export|from|as)\b'
       scope: keyword.other.flowa
     - match: '\b(true|false|null|undefined)\b'
       scope: constant.language.flowa
@@ -74,31 +77,35 @@ contexts:
           pop: true
 
   numbers:
-    - match: '\b\d+(\.\d+)?([eE][+-]?\d+)?\b'
-      scope: constant.numeric.flowa
     - match: '\b0[xX][0-9a-fA-F]+\b'
       scope: constant.numeric.hex.flowa
     - match: '\b0[bB][01]+\b'
       scope: constant.numeric.binary.flowa
     - match: '\b0[oO][0-7]+\b'
       scope: constant.numeric.octal.flowa
+    - match: '\b\d+(\.\d+)?([eE][+-]?\d+)?\b'
+      scope: constant.numeric.flowa
 
   functions:
     - match: '\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()'
       scope: entity.name.function.flowa
-    - match: '\b(print|println|assert|test|len|push|pop|keys|values|typeof|parseInt|parseFloat|isNaN|isFinite)\b'
+    - match: '\b(print|println|assert|test|len|push|pop|shift|keys|values|typeof|type|tonumber|tostring|parseInt|parseFloat|isNaN|isFinite|power|sqrt|floor|ceil|round|abs|min|max|upper|lower|substring|contains|trim|replace|startsWith|endsWith|charAt|split|join|slice|sort|reverse|includes|indexOf)\b'
       scope: support.function.builtin.flowa
-    - match: '\b(http|sqlite|json|auth|jwt|mail|log|fs|os|env|cron)\b'
+
+  modules:
+    - match: '\b(http|sqlite|json|auth|jwt|mail|log|fs|os|env|cron|time)\b'
       scope: support.type.module.flowa
+    - match: '(?<=\.)\b(createServer|on|listen|get|post|put|delete|setAllowedOrigins|addAllowedOrigin|setDevMode|setRateLimit|setMaxBodySize|enableCORS|setCORSOrigins|readFile|writeFile|appendFile|exists|open|close|exec|query|stringify|parse|hash|verify|sign|decode|send|info|warn|error|debug|schedule|now_ms|since_s)\b'
+      scope: support.function.module.flowa
 
   operators:
-    - match: '\+|\-|\*|\/|%|\+\+|\-\-'
+    - match: '\+\+|\-\-|\+|\-|\*|\/|%'
       scope: keyword.operator.arithmetic.flowa
-    - match: '==|!=|===|!==|<|>|<=|>='
+    - match: '===|!==|==|!=|<=|>=|<|>'
       scope: keyword.operator.comparison.flowa
     - match: '&&|\|\||!'
       scope: keyword.operator.logical.flowa
-    - match: '=|\+=|\-=|\*=|\/=|%='
+    - match: '\+=|\-=|\*=|\/=|%=|='
       scope: keyword.operator.assignment.flowa
-    - match: '&|\||\^|~|<<|>>|>>>'
+    - match: '<<|>>>|>>|&|\||\^|~'
       scope: keyword.operator.bitwise.flowa
