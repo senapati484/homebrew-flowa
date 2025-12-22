@@ -8,9 +8,8 @@ if exists("b:current_syntax")
 endif
 
 " Keywords
-syn keyword flowaControl if else while for return break continue try catch finally throw switch case default
-syn keyword flowaDeclaration let const var function func class actor
-syn keyword flowaKeyword new this super extends static async await spawn import export from as
+syn keyword flowaKeyword if else while for return break continue try catch throw switch case default
+syn keyword flowaDeclaration let const var function func class new this super extends static async await import export from as
 syn keyword flowaConstant true false null undefined
 
 " Comments
@@ -18,9 +17,9 @@ syn region flowaLineComment start="//" end="$" contains=@Spell
 syn region flowaBlockComment start="/\*" end="\*/" contains=@Spell
 
 " Strings
-syn region flowaString start=+"+ skip=+\\\\\\|\\\"+ end=+"+
-syn region flowaString start=+'+ skip=+\\\\\\|\\'+ end=+'+
-syn region flowaTemplate start=+`+ skip=+\\\\\\|\\`+ end=+`+ contains=flowaTemplateExpr
+syn region flowaString start=+"+ skip=+\\\\\|\\"\+ end=+"+
+syn region flowaString start=+'+ skip=+\\\\\|\\'\+ end=+'+
+syn region flowaTemplate start=+`+ skip=+\\\\\|\\`\+ end=+`+ contains=flowaTemplateExpr
 syn region flowaTemplateExpr start=+\${+ end=+}+ contained contains=ALL
 
 " Numbers
@@ -31,21 +30,10 @@ syn match flowaOctalNumber "\<0[oO][0-7]\+\>"
 
 " Functions
 syn match flowaFunction "\<[a-zA-Z_$][a-zA-Z0-9_$]*\>\s*("he=e-1
-
-" Builtin Functions
-syn keyword flowaBuiltin print println assert test len push pop shift keys values typeof type tonumber tostring
-syn keyword flowaBuiltin parseInt parseFloat isNaN isFinite power sqrt floor ceil round abs min max
-syn keyword flowaBuiltin upper lower substring contains trim replace startsWith endsWith charAt split join
-syn keyword flowaBuiltin slice sort reverse includes indexOf
+syn keyword flowaBuiltin print println assert test len push pop keys values typeof parseInt parseFloat isNaN isFinite
 
 " Modules
-syn keyword flowaModule http sqlite json auth jwt mail log fs os env cron time
-
-" Module Methods
-syn keyword flowaModuleMethod createServer on listen get post put delete setAllowedOrigins addAllowedOrigin
-syn keyword flowaModuleMethod setDevMode setRateLimit setMaxBodySize enableCORS setCORSOrigins
-syn keyword flowaModuleMethod readFile writeFile appendFile exists open close exec query stringify parse
-syn keyword flowaModuleMethod hash verify sign decode send info warn error debug schedule now_ms since_s
+syn keyword flowaModule http sqlite json auth jwt mail log fs os env cron
 
 " Operators
 syn match flowaOperator "+\|-\|*\|/\|%\|++\|--"
@@ -55,9 +43,8 @@ syn match flowaOperator "=\|+=\|-=\|*=\|/=\|%="
 syn match flowaOperator "&\||\|\^\|~\|<<\|>>\|>>>"
 
 " Highlighting
-hi def link flowaControl Keyword
-hi def link flowaDeclaration StorageClass
 hi def link flowaKeyword Keyword
+hi def link flowaDeclaration StorageClass
 hi def link flowaConstant Constant
 hi def link flowaLineComment Comment
 hi def link flowaBlockComment Comment
@@ -71,7 +58,6 @@ hi def link flowaOctalNumber Number
 hi def link flowaFunction Function
 hi def link flowaBuiltin Function
 hi def link flowaModule Type
-hi def link flowaModuleMethod Function
 hi def link flowaOperator Operator
 
 let b:current_syntax = "flowa"
