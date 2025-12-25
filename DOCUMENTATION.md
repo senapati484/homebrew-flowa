@@ -1144,7 +1144,6 @@ See `/docs/CONTRIBUTING.md` for guidelines on contributing to Flowa.
 See `LICENSE` file in repository root.
 
 Last Updated: December 2024
-
 if (true){
     print("Release Candidate")
 } else {
@@ -1244,3 +1243,4 @@ Use `spawn` to create an actor instance. Method calls on an actor instance are n
 let w = spawn Worker();
 w.process("Task 1"); // Asynchronous call
 ```
+

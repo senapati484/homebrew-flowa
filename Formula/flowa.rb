@@ -2,7 +2,7 @@ class Flowa < Formula
   desc "Flowa: A high-performance scripting language with JIT compilation"
   homepage "https://flowa-docs.vercel.app"
   url "https://raw.githubusercontent.com/senapati484/homebrew-flowa/main/flowa.tar.gz"
-  sha256 "1212e658c535a1e22ac410f505537f8ccfa8cb466d5c8782f21dc781b3f21eb0"
+  sha256 "e437f2935cb9b41424b9c6139042f4ca9a7cea37d4593fce96ec44f775780cc7"
   version "0.1.7"
   license "MIT"
 
